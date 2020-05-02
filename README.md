@@ -11,3 +11,9 @@
 
 - Required packages:
     - `Pillow` : https://pypi.org/project/Pillow/2.2.1/
+    
+- Example run:
+    - `main.bat` or `main.sh`
+        - `input_path` = `.\images`
+        - `ouptut_path` = `.\output`
+        - `type` = `gray`
