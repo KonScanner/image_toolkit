@@ -1,0 +1,1 @@
+python image_toolkit.py ./images ./output gray
