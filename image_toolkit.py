@@ -22,14 +22,14 @@ class Image_stuff:
         for c, image in enumerate(self.image_dirs):
             img = Image.open(image).convert('LA')
             img.save(str(self.output_path) + '/' +
-                     '{0}_greyscale.{1}'.format(self.file_names[c], self.img_type))
+                     '{0}_greyscale{1}'.format(self.file_names[c], self.img_type))
 
     def _resize_symmetric(self, scale):
         for c, image in enumerate(self.image_dirs):
             img = Image.open(image)
             img = img.resize((scale, scale), Image.ANTIALIAS)
             img.save(str(self.output_path) + '/' +
-                     '{0}_rescaled_sym.{1}'.format(self.file_names[c], self.img_type))
+                     '{0}_rescaled_sym{1}'.format(self.file_names[c], self.img_type))
 
     def _resize_proportionally(self, width):
         for c, image in enumerate(self.image_dirs):
@@ -38,13 +38,13 @@ class Image_stuff:
             hsize = int((float(img.size[1])*float(wpercent)))
             img = img.resize((width, hsize), Image.ANTIALIAS)
             img.save(str(self.output_path) + '/' +
-                     '{0}_rescaled.{1}'.format(self.file_names[c], self.img_type))
+                     '{0}_rescaled{1}'.format(self.file_names[c], self.img_type))
 
     def _mirror(self):
         for c, image in enumerate(self.image_dirs):
             img = Image.open(image).transpose(Image.FLIP_LEFT_RIGHT)
             img.save(str(self.output_path) + '/' +
-                     '{0}_mirrored.{1}'.format(self.file_names[c], self.img_type))
+                     '{0}_mirrored{1}'.format(self.file_names[c], self.img_type))
 
 
 if __name__ == "__main__":
