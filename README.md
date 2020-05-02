@@ -1,5 +1,6 @@
 # image_toolkit
-- Solely purposed for reshaping/grayscaling/mirroring images for an image processing pipeline project
+- Solely purposed for reshaping/grayscaling/mirroring images for an image processing pipeline project.
+    - There's a `self.image_type` that can be utilised to load `.png`,`.jpg` or other types of supported image formats by the `Pillow` library.
 
 - Requires 3 `sys.argv`'s to run:
     - `sys.arv[1]` = input_path
