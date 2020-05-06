@@ -46,6 +46,12 @@ class Image_stuff:
             img.save(str(self.output_path) + '/' +
                      '{0}_mirrored{1}'.format(self.file_names[c], self.img_type))
 
+    def _rotate(self, degrees):
+        for c, image in enumerate(self.image_dirs):
+            img = Image.open(image).rotate(degrees)
+            img.save(str(self.output_path) + '/' +
+                     '{0}_rotated{1}'.format(self.file_names[c], self.img_type))
+
 
 if __name__ == "__main__":
 
@@ -55,16 +61,24 @@ if __name__ == "__main__":
     init = Image_stuff(input_path=in_path, output_path=out_path)
 
     if type_ == 'resize_sym':
-        init._resize_symmetric(28)
+        resize_val = int(
+            input('Insert a width value for symmetric resizing: '))
+        init._resize_symmetric(resize_val)
 
     elif type_ == 'resize_prop':
-        init._resize_proportionally(28)
+        resize_val = int(
+            input('Insert a width value for proportional resizing: '))
+        init._resize_proportionally(resize_val)
 
     elif type_ == 'mirror':
         init._mirror()
 
     elif type_ == 'gray':
         init._greyscale()
+
+    elif type_ == 'rotate':
+        degrees = int(input('Insert a value in degrees for rotation: '))
+        init._rotate(degrees)
 
     else:
         print('Incorrect type\nTry:\nresize_sym,resize_prop,mirror,gray')
