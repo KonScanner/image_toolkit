@@ -18,18 +18,22 @@ class Image_stuff:
     def _image_names(self):
         return [file.strip(self.img_type) for file in os.listdir(self.input_path)]
 
+    def _save_image(self, counter: int, image_object, transformation: str = 'None'):
+        image_object.save(str(self.output_path) + '/' +
+                          '{0}{1}{2}'.format(self.file_names[counter], transformation, self.img_type))
+
     def _greyscale(self):
         for c, image in enumerate(self.image_dirs):
             img = Image.open(image).convert('LA')
-            img.save(str(self.output_path) + '/' +
-                     '{0}_greyscale{1}'.format(self.file_names[c], self.img_type))
+            self._save_image(counter=c, image_object=img,
+                             transformation=f'{self._greyscale.__name__}')
 
     def _resize_symmetric(self, scale):
         for c, image in enumerate(self.image_dirs):
             img = Image.open(image)
             img = img.resize((scale, scale), Image.ANTIALIAS)
-            img.save(str(self.output_path) + '/' +
-                     '{0}_rescaled_sym{1}'.format(self.file_names[c], self.img_type))
+            self._save_image(counter=c, image_object=img,
+                             transformation=f'{self._resize_symmetric.__name__}')
 
     def _resize_proportionally(self, width):
         for c, image in enumerate(self.image_dirs):
@@ -37,20 +41,20 @@ class Image_stuff:
             wpercent = (width/float(img.size[0]))
             hsize = int((float(img.size[1])*float(wpercent)))
             img = img.resize((width, hsize), Image.ANTIALIAS)
-            img.save(str(self.output_path) + '/' +
-                     '{0}_rescaled{1}'.format(self.file_names[c], self.img_type))
+            self._save_image(counter=c, image_object=img,
+                             transformation=f'{self._resize_proportionally.__name__}')
 
     def _mirror(self):
         for c, image in enumerate(self.image_dirs):
             img = Image.open(image).transpose(Image.FLIP_LEFT_RIGHT)
-            img.save(str(self.output_path) + '/' +
-                     '{0}_mirrored{1}'.format(self.file_names[c], self.img_type))
+            self._save_image(counter=c, image_object=img,
+                             transformation=f'{self._mirror.__name__}')
 
     def _rotate(self, degrees):
         for c, image in enumerate(self.image_dirs):
             img = Image.open(image).rotate(degrees)
-            img.save(str(self.output_path) + '/' +
-                     '{0}_rotated{1}'.format(self.file_names[c], self.img_type))
+            self._save_image(counter=c, image_object=img,
+                             transformation=f'{self._rotate.__name__}')
 
 
 if __name__ == "__main__":
@@ -58,7 +62,9 @@ if __name__ == "__main__":
     in_path = str(sys.argv[1])
     out_path = str(sys.argv[2])
     type_ = str(sys.argv[3])
-    init = Image_stuff(input_path=in_path, output_path=out_path)
+    img_type = str(input('png or jpg: '))
+    init = Image_stuff(input_path=in_path,
+                       output_path=out_path, img_type='.'+img_type)
 
     if type_ == 'resize_sym':
         resize_val = int(
